@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sort plates in descending order
         const sortedPlates = [...plateWeights].sort((a, b) => b - a);
 
+        // First pass: try to use the largest plates possible
         for (const plateWeight of sortedPlates) {
             const availableCount = availablePlates.get(plateWeight) || 0;
             if (availableCount === 0) continue;
@@ -184,7 +185,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (remainingWeight === 0) break;
         }
 
-        return remainingWeight === 0 ? combination : null;
+        // If we couldn't find an exact combination, try to find the closest possible
+        if (remainingWeight > 0) {
+            // Find the smallest plate that can help us get closer
+            for (const plateWeight of sortedPlates) {
+                const availableCount = availablePlates.get(plateWeight) || 0;
+                if (availableCount === 0) continue;
+
+                const maxPairs = Math.min(
+                    Math.ceil(remainingWeight / plateWeight),
+                    Math.floor(availableCount / 2)
+                );
+
+                if (maxPairs > 0) {
+                    combination.set(plateWeight, maxPairs * 2);
+                    remainingWeight -= maxPairs * plateWeight;
+                    totalPlates += maxPairs * 2;
+                    break;
+                }
+            }
+        }
+
+        return combination;
     }
 
     function displayPlateCombination(combination) {

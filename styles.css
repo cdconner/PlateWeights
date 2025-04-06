@@ -125,7 +125,8 @@ main {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    gap: 2px; /* Add gap between plates */
+    gap: 4px; /* Increased gap between plates */
+    padding-left: 10px; /* Added padding from the edge */
 }
 
 .plates-right {
@@ -134,7 +135,8 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 2px; /* Add gap between plates */
+    gap: 4px; /* Increased gap between plates */
+    padding-right: 10px; /* Added padding from the edge */
 }
 
 /* Add spacing between plates */
@@ -342,13 +344,13 @@ button:hover {
     }
 
     .plates-left {
-        left: 0;
-        padding-left: 2px; /* Add padding instead of margin */
+        padding-left: 5px; /* Reduced padding for tablet */
+        gap: 3px; /* Slightly reduced gap for tablet */
     }
 
     .plates-right {
-        right: 0;
-        padding-right: 2px; /* Add padding instead of margin */
+        padding-right: 5px; /* Reduced padding for tablet */
+        gap: 3px; /* Slightly reduced gap for tablet */
     }
 }
 
@@ -374,13 +376,13 @@ button:hover {
     }
 
     .plates-left {
-        left: 0;
-        padding-left: 1px; /* Add padding instead of margin */
+        padding-left: 3px; /* Minimal padding for mobile */
+        gap: 2px; /* Minimal gap for mobile */
     }
 
     .plates-right {
-        right: 0;
-        padding-right: 1px; /* Add padding instead of margin */
+        padding-right: 3px; /* Minimal padding for mobile */
+        gap: 2px; /* Minimal gap for mobile */
     }
 }
 
