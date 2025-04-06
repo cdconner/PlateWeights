@@ -218,6 +218,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedPlates = Array.from(combination.entries())
             .sort((a, b) => b[0] - a[0]); // Sort by weight in descending order
 
+        // Calculate total number of plates per side
+        let totalPlatesPerSide = 0;
+        for (const [weight, totalCount] of sortedPlates) {
+            totalPlatesPerSide += totalCount / 2;
+        }
+
+        // Update container class based on number of plates
+        const container = document.querySelector('.plates-container');
+        container.className = 'plates-container'; // Reset classes
+        if (totalPlatesPerSide <= 2) {
+            container.classList.add('few-plates');
+        } else if (totalPlatesPerSide <= 4) {
+            container.classList.add('medium-plates');
+        } else {
+            container.classList.add('many-plates');
+        }
+
         // Create plates for both sides in sorted order
         for (const [weight, totalCount] of sortedPlates) {
             // Since we stored total count, divide by 2 to get count per side

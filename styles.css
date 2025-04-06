@@ -117,7 +117,15 @@ main {
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    gap: 60px; /* Default gap for few plates */
+}
+
+.plates-container.medium-plates {
     gap: 40px;
+}
+
+.plates-container.many-plates {
+    gap: 20px;
 }
 
 .plates-left {
@@ -344,10 +352,22 @@ button:hover {
         height: 91px;
     }
 
+    .plates-container {
+        gap: 45px; /* Default gap for few plates */
+    }
+    
+    .plates-container.medium-plates {
+        gap: 30px;
+    }
+    
+    .plates-container.many-plates {
+        gap: 15px;
+    }
+
     .plates-left, .plates-right {
         gap: 3px;
     }
-
+    
     .plates-left {
         padding-left: 15px;
     }
@@ -378,10 +398,22 @@ button:hover {
         height: 77px;
     }
 
+    .plates-container {
+        gap: 30px; /* Default gap for few plates */
+    }
+    
+    .plates-container.medium-plates {
+        gap: 20px;
+    }
+    
+    .plates-container.many-plates {
+        gap: 10px;
+    }
+
     .plates-left, .plates-right {
         gap: 2px;
     }
-
+    
     .plates-left {
         padding-left: 5%;
     }
