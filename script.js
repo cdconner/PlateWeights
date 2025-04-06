@@ -28,15 +28,45 @@ document.addEventListener('DOMContentLoaded', () => {
     closeResult.addEventListener('click', () => result.classList.add('hidden'));
 
     function initializePlateCounters() {
-        document.querySelectorAll('.plate-option').forEach((option, index) => {
-            const weight = PLATE_WEIGHTS[index];
-            const countSpan = option.querySelector('.count');
-            const incrementBtn = option.querySelector('.increment');
-            const decrementBtn = option.querySelector('.decrement');
+        const plateOptions = document.querySelector('.plate-options');
+        plateOptions.innerHTML = ''; // Clear existing options
 
+        PLATE_WEIGHTS.forEach((weight) => {
+            const plateOption = document.createElement('div');
+            plateOption.className = 'plate-option';
+            
+            const weightSpan = document.createElement('span');
+            weightSpan.textContent = `${weight} lbs`;
+            
+            const counter = document.createElement('div');
+            counter.className = 'counter';
+            
+            const decrementBtn = document.createElement('button');
+            decrementBtn.className = 'decrement';
+            decrementBtn.textContent = '-';
+            
+            const countSpan = document.createElement('span');
+            countSpan.className = 'count';
+            countSpan.textContent = '0';
+            
+            const incrementBtn = document.createElement('button');
+            incrementBtn.className = 'increment';
+            incrementBtn.textContent = '+';
+            
+            counter.appendChild(decrementBtn);
+            counter.appendChild(countSpan);
+            counter.appendChild(incrementBtn);
+            
+            plateOption.appendChild(weightSpan);
+            plateOption.appendChild(counter);
+            
+            plateOptions.appendChild(plateOption);
+
+            // Add event listeners
             incrementBtn.addEventListener('click', () => {
-                availablePlates.set(weight, availablePlates.get(weight) + 1);
-                countSpan.textContent = availablePlates.get(weight);
+                const currentCount = availablePlates.get(weight);
+                availablePlates.set(weight, currentCount + 1);
+                countSpan.textContent = currentCount + 1;
             });
 
             decrementBtn.addEventListener('click', () => {
@@ -84,9 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update plate labels
         document.querySelectorAll('.plate-option span').forEach((span, index) => {
             const weight = PLATE_WEIGHTS[index];
-            span.textContent = isMetric ? 
-                `${(weight * LBS_TO_KG).toFixed(1)} kg` : 
-                `${weight} lbs`;
+            if (isMetric) {
+                const kgWeight = (weight * LBS_TO_KG).toFixed(1);
+                span.textContent = `${kgWeight} kg`;
+            } else {
+                span.textContent = `${weight} lbs`;
+            }
         });
 
         // If there's a result showing, recalculate to update the display
@@ -100,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let targetWeightValue = parseFloat(targetWeight.value);
 
         if (isNaN(targetWeightValue)) {
-            showError('Please enter a valid target weight');
+            showError(`Please enter a valid target weight in ${isMetric ? 'kilograms' : 'pounds'}`);
             return;
         }
 
@@ -110,9 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const weightToAdd = targetWeightInLbs - barbellWeightInLbs;
         if (weightToAdd <= 0) {
-            showError(`Target weight must be greater than barbell weight (${isMetric ? 
-                (barbellWeightInLbs * LBS_TO_KG).toFixed(1) + ' kg' : 
-                barbellWeightInLbs + ' lbs'})`);
+            const barbellDisplay = isMetric ? 
+                `${(barbellWeightInLbs * LBS_TO_KG).toFixed(1)} kg` : 
+                `${barbellWeightInLbs} lbs`;
+            showError(`Target weight must be greater than barbell weight (${barbellDisplay})`);
             return;
         }
 
@@ -180,8 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const plate = document.createElement('div');
         plate.className = 'plate ' + getWeightClass(weight);
         plate.textContent = isMetric ? 
-            `${(weight * LBS_TO_KG).toFixed(1)}` : 
-            weight;
+            `${(weight * LBS_TO_KG).toFixed(1)} kg` : 
+            `${weight} lb`;
         return plate;
     }
 
