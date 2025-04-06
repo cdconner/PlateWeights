@@ -114,11 +114,11 @@ main {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     pointer-events: none;
     padding: 0 20px;
-    box-sizing: border-box; /* Added to ensure padding is included in width */
+    box-sizing: border-box;
 }
 
 .plates-left {
@@ -128,7 +128,6 @@ main {
     gap: 4px;
     position: relative;
     z-index: 1;
-    margin-right: auto; /* Added to ensure proper spacing from center */
 }
 
 .plates-right {
@@ -138,7 +137,6 @@ main {
     gap: 4px;
     position: relative;
     z-index: 1;
-    margin-left: auto; /* Added to ensure proper spacing from center */
 }
 
 /* Add spacing between plates */
