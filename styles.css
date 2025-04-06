@@ -117,7 +117,7 @@ main {
     justify-content: center;
     align-items: center;
     pointer-events: none;
-    gap: 60px; /* Default gap for few plates */
+    gap: 180px; /* Increased from 60px for few plates */
 }
 
 .plates-container.medium-plates {
@@ -353,7 +353,7 @@ button:hover {
     }
 
     .plates-container {
-        gap: 45px; /* Default gap for few plates */
+        gap: 135px; /* Increased from 45px for few plates */
     }
     
     .plates-container.medium-plates {
@@ -399,7 +399,7 @@ button:hover {
     }
 
     .plates-container {
-        gap: 30px; /* Default gap for few plates */
+        gap: 90px; /* Increased from 30px for few plates */
     }
     
     .plates-container.medium-plates {
