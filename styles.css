@@ -85,8 +85,23 @@ main {
     position: relative;
 }
 
-/* Add collars */
-.barbell-bar::before,
+/* Left collar */
+.barbell-bar::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background-color: #95a5a6;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    left: 20%;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+/* Right collar */
 .barbell-bar::after {
     content: '';
     position: absolute;
@@ -97,23 +112,13 @@ main {
     transform: translateY(-50%);
     border-radius: 4px;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.barbell-bar::before {
-    left: 20%;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-}
-
-.barbell-bar::after {
     right: 20%;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
-/* Add grip texture to the middle of the bar */
-.barbell-bar::after {
-    content: '';
+/* Grip texture */
+.grip-texture {
     position: absolute;
     left: 35%;
     right: 35%;
