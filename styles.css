@@ -85,6 +85,50 @@ main {
     position: relative;
 }
 
+/* Add collars */
+.barbell-bar::before,
+.barbell-bar::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background-color: #95a5a6;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.barbell-bar::before {
+    left: 20%;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.barbell-bar::after {
+    right: 20%;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+/* Add grip texture to the middle of the bar */
+.barbell-bar::after {
+    content: '';
+    position: absolute;
+    left: 35%;
+    right: 35%;
+    top: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        #7f8c8d,
+        #7f8c8d 3px,
+        #95a5a6 3px,
+        #95a5a6 6px
+    );
+    border-radius: 5px;
+}
+
 .plates-container {
     position: absolute;
     width: 100%;
@@ -92,6 +136,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    pointer-events: none;
 }
 
 .plates-left, .plates-right {
@@ -103,11 +148,13 @@ main {
 .plates-left {
     flex-direction: row-reverse; /* Stack from right to left */
     justify-content: flex-end;
+    margin-left: calc(20% + 20px);
 }
 
 .plates-right {
     flex-direction: row; /* Stack from left to right */
     justify-content: flex-start;
+    margin-right: calc(20% + 20px);
 }
 
 .plate {
@@ -304,8 +351,18 @@ button:hover {
         height: 80px;
     }
 
-    .barbell-bar {
-        height: 8px;
+    .barbell-bar::before,
+    .barbell-bar::after {
+        width: 15px;
+        height: 25px;
+    }
+
+    .plates-left {
+        margin-left: calc(20% + 15px);
+    }
+
+    .plates-right {
+        margin-right: calc(20% + 15px);
     }
 }
 
@@ -321,8 +378,18 @@ button:hover {
         height: 70px;
     }
 
-    .barbell-bar {
-        height: 6px;
+    .barbell-bar::before,
+    .barbell-bar::after {
+        width: 12px;
+        height: 20px;
+    }
+
+    .plates-left {
+        margin-left: calc(20% + 12px);
+    }
+
+    .plates-right {
+        margin-right: calc(20% + 12px);
     }
 }
 
