@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const option = document.createElement('option');
             option.value = weight;
             option.textContent = isMetric ? 
-                `${Math.round(weight * LBS_TO_KG)} kg` : 
+                `${(weight * LBS_TO_KG).toFixed(1)} kg` : 
                 `${weight} lbs`;
             option.selected = weight === parseInt(currentValue);
             barbellWeight.appendChild(option);
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.plate-option span').forEach((span, index) => {
             const weight = PLATE_WEIGHTS[index];
             span.textContent = isMetric ? 
-                `${Math.round(weight * LBS_TO_KG)} kg` : 
+                `${(weight * LBS_TO_KG).toFixed(1)} kg` : 
                 `${weight} lbs`;
         });
     }
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const plate = document.createElement('div');
         plate.className = 'plate ' + getWeightClass(weight);
         plate.textContent = isMetric ? 
-            Math.round(weight * LBS_TO_KG) : 
+            `${(weight * LBS_TO_KG).toFixed(1)}` : 
             weight;
         return plate;
     }
