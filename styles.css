@@ -342,14 +342,17 @@ button:hover {
     .plate {
         width: 20px;
         height: 91px;
+        margin: 0 2px;
     }
 
     .plates-left {
-        left: 5%;
+        left: 2%;
+        justify-content: flex-start;
     }
 
     .plates-right {
-        right: 5%;
+        right: 2%;
+        justify-content: flex-start;
     }
 }
 
@@ -372,14 +375,17 @@ button:hover {
     .plate {
         width: 18px;
         height: 77px;
+        margin: 0 1px;
     }
 
     .plates-left {
-        left: 2%;
+        left: 1%;
+        justify-content: flex-start;
     }
 
     .plates-right {
-        right: 2%;
+        right: 1%;
+        justify-content: flex-start;
     }
 }
 
