@@ -169,15 +169,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const availableCount = availablePlates.get(plateWeight) || 0;
             if (availableCount === 0) continue;
 
-            const maxPlates = Math.min(
+            // Calculate maximum number of pairs we can use
+            const maxPairs = Math.min(
                 Math.floor(remainingWeight / plateWeight),
-                availableCount
+                Math.floor(availableCount / 2) // Ensure we have enough plates for both sides
             );
 
-            if (maxPlates > 0) {
-                combination.set(plateWeight, maxPlates);
-                remainingWeight -= maxPlates * plateWeight;
-                totalPlates += maxPlates;
+            if (maxPairs > 0) {
+                combination.set(plateWeight, maxPairs * 2); // Store total plates needed (both sides)
+                remainingWeight -= maxPairs * plateWeight;
+                totalPlates += maxPairs * 2;
             }
 
             if (remainingWeight === 0) break;
@@ -196,8 +197,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .sort((a, b) => b[0] - a[0]); // Sort by weight in descending order
 
         // Create plates for both sides in sorted order
-        for (const [weight, count] of sortedPlates) {
-            for (let i = 0; i < count; i++) {
+        for (const [weight, totalCount] of sortedPlates) {
+            // Since we stored total count, divide by 2 to get count per side
+            const countPerSide = totalCount / 2;
+            for (let i = 0; i < countPerSide; i++) {
                 const plate = createPlateElement(weight);
                 platesLeft.appendChild(plate.cloneNode(true));
                 platesRight.appendChild(plate);
