@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Constants
-    const PLATE_WEIGHTS = [100, 45, 35, 25, 10, 5, 2.5, 1.25];
+    const PLATE_WEIGHTS_LBS = [100, 45, 35, 25, 10, 5, 2.5, 1.25];
+    const PLATE_WEIGHTS_KG = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5];
     const KG_TO_LBS = 2.20462;
     const LBS_TO_KG = 0.453592;
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State
     let isMetric = false;
-    let availablePlates = new Map(PLATE_WEIGHTS.map(weight => [weight, 0]));
+    let availablePlates = new Map(PLATE_WEIGHTS_LBS.map(weight => [weight, 0]));
 
     // Initialize plate counters
     initializePlateCounters();
@@ -31,12 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const plateOptions = document.querySelector('.plate-options');
         plateOptions.innerHTML = ''; // Clear existing options
 
-        PLATE_WEIGHTS.forEach((weight) => {
+        const weights = isMetric ? PLATE_WEIGHTS_KG : PLATE_WEIGHTS_LBS;
+        
+        weights.forEach((weight) => {
             const plateOption = document.createElement('div');
             plateOption.className = 'plate-option';
             
             const weightSpan = document.createElement('span');
-            weightSpan.textContent = `${weight} lbs`;
+            weightSpan.textContent = `${weight} ${isMetric ? 'kg' : 'lbs'}`;
             
             const counter = document.createElement('div');
             counter.className = 'counter';
@@ -47,7 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const countSpan = document.createElement('span');
             countSpan.className = 'count';
-            countSpan.textContent = '0';
+            
+            // Convert the stored pound value to kg if needed
+            const weightInLbs = isMetric ? weight * KG_TO_LBS : weight;
+            countSpan.textContent = availablePlates.get(weightInLbs) || '0';
             
             const incrementBtn = document.createElement('button');
             incrementBtn.className = 'increment';
@@ -64,15 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add event listeners
             incrementBtn.addEventListener('click', () => {
-                const currentCount = availablePlates.get(weight);
-                availablePlates.set(weight, currentCount + 1);
+                const weightToStore = isMetric ? weight * KG_TO_LBS : weight;
+                const currentCount = availablePlates.get(weightToStore) || 0;
+                availablePlates.set(weightToStore, currentCount + 1);
                 countSpan.textContent = currentCount + 1;
             });
 
             decrementBtn.addEventListener('click', () => {
-                const currentCount = availablePlates.get(weight);
+                const weightToStore = isMetric ? weight * KG_TO_LBS : weight;
+                const currentCount = availablePlates.get(weightToStore) || 0;
                 if (currentCount > 0) {
-                    availablePlates.set(weight, currentCount - 1);
+                    availablePlates.set(weightToStore, currentCount - 1);
                     countSpan.textContent = currentCount - 1;
                 }
             });
@@ -111,16 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
             barbellWeight.appendChild(option);
         });
 
-        // Update plate labels
-        document.querySelectorAll('.plate-option span').forEach((span, index) => {
-            const weight = PLATE_WEIGHTS[index];
-            if (isMetric) {
-                const kgWeight = (weight * LBS_TO_KG).toFixed(1);
-                span.textContent = `${kgWeight} kg`;
-            } else {
-                span.textContent = `${weight} lbs`;
-            }
-        });
+        // Reinitialize plate counters with new unit system
+        initializePlateCounters();
 
         // If there's a result showing, recalculate to update the display
         if (!result.classList.contains('hidden')) {
@@ -164,11 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let remainingWeight = targetWeightPerSide;
         let totalPlates = 0;
 
+        // Get the appropriate plate weights based on the current unit system
+        const plateWeights = isMetric ? 
+            PLATE_WEIGHTS_KG.map(kg => kg * KG_TO_LBS) : 
+            PLATE_WEIGHTS_LBS;
+
         // Sort plates in descending order
-        const sortedPlates = [...PLATE_WEIGHTS].sort((a, b) => b - a);
+        const sortedPlates = [...plateWeights].sort((a, b) => b - a);
 
         for (const plateWeight of sortedPlates) {
-            const availableCount = availablePlates.get(plateWeight);
+            const availableCount = availablePlates.get(plateWeight) || 0;
             if (availableCount === 0) continue;
 
             const maxPlates = Math.min(
