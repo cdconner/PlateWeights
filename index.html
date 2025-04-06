@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starting Plates - Weight Plate Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Starting Plates</h1>
+            <div class="unit-toggle">
+                <button id="unitToggle" class="toggle-btn">Switch to kg</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="barbell-section">
+                <div class="barbell">
+                    <div class="barbell-bar"></div>
+                    <div class="plates-container">
+                        <div class="plates-left"></div>
+                        <div class="plates-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculator-section">
+                <div class="barbell-weight">
+                    <label for="barbellWeight">Barbell Weight:</label>
+                    <select id="barbellWeight">
+                        <option value="45" selected>45 lbs</option>
+                        <option value="25">25 lbs</option>
+                        <option value="30">30 lbs</option>
+                        <option value="35">35 lbs</option>
+                        <option value="40">40 lbs</option>
+                        <option value="45">45 lbs</option>
+                        <option value="50">50 lbs</option>
+                        <option value="55">55 lbs</option>
+                        <option value="60">60 lbs</option>
+                    </select>
+                </div>
+
+                <div class="target-weight">
+                    <label for="targetWeight">Target Weight:</label>
+                    <input type="number" id="targetWeight" placeholder="Enter target weight">
+                    <button id="calculateBtn">Calculate</button>
+                </div>
+
+                <div class="available-plates">
+                    <h2>Available Plates</h2>
+                    <div class="plate-options">
+                        <div class="plate-option">
+                            <span>100 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>45 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>35 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>25 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>10 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>5 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>2.5 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                        <div class="plate-option">
+                            <span>1.25 lbs</span>
+                            <div class="counter">
+                                <button class="decrement">-</button>
+                                <span class="count">0</span>
+                                <button class="increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="result" class="result hidden">
+            <div class="result-content">
+                <h2>Plate Combination</h2>
+                <div id="plateCombination"></div>
+                <button id="closeResult">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
