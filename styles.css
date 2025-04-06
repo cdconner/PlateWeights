@@ -324,52 +324,62 @@ button:hover {
         grid-template-columns: 1fr;
     }
 
+    .barbell {
+        width: 90%;
+        height: 20px;
+    }
+
+    .barbell-bar {
+        width: 100%;
+        height: 20px;
+    }
+
+    .grip-texture {
+        width: 30%;
+        height: 20px;
+    }
+
     .plate {
         width: 20px;
-        height: 118px;
-    }
-
-    .barbell {
-        height: 80px;
-    }
-
-    .barbell-bar::before,
-    .barbell-bar::after {
-        width: 15px;
-        height: 25px;
+        height: 91px;
     }
 
     .plates-left {
-        left: 18%;
+        left: 5%;
     }
 
     .plates-right {
-        right: 18%;
+        right: 5%;
     }
 }
 
 @media (max-width: 480px) {
+    .barbell {
+        width: 95%;
+        height: 15px;
+    }
+
+    .barbell-bar {
+        width: 100%;
+        height: 15px;
+    }
+
+    .grip-texture {
+        width: 30%;
+        height: 15px;
+    }
+
     .plate {
         width: 18px;
-        height: 100px;
-    }
-
-    .barbell {
-        height: 70px;
-    }
-
-    .barbell-bar::before,
-    .barbell-bar::after {
-        width: 12px;
-        height: 20px;
+        height: 77px;
     }
 
     .plates-left {
-        left: 18%;
+        left: 2%;
     }
 
     .plates-right {
-        right: 18%;
+        right: 2%;
     }
 }
 
