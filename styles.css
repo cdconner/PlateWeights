@@ -116,28 +116,25 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    pointer-events: none;
-    z-index: 3; /* Plates between grip and collars */
-}
-
-.plates-left, .plates-right {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    z-index: 2;
 }
 
 .plates-left {
+    position: absolute;
+    left: 0;
+    display: flex;
     flex-direction: row-reverse;
-    justify-content: flex-start;
-    left: 5%;
+    align-items: center;
+    gap: 2px; /* Add gap between plates */
 }
 
 .plates-right {
+    position: absolute;
+    right: 0;
+    display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    right: 5%;
+    align-items: center;
+    gap: 2px; /* Add gap between plates */
 }
 
 /* Add spacing between plates */
@@ -342,17 +339,16 @@ button:hover {
     .plate {
         width: 20px;
         height: 91px;
-        margin: 0 2px;
     }
 
     .plates-left {
-        left: 2%;
-        justify-content: flex-start;
+        left: 0;
+        padding-left: 2px; /* Add padding instead of margin */
     }
 
     .plates-right {
-        right: 2%;
-        justify-content: flex-start;
+        right: 0;
+        padding-right: 2px; /* Add padding instead of margin */
     }
 }
 
@@ -375,17 +371,16 @@ button:hover {
     .plate {
         width: 18px;
         height: 77px;
-        margin: 0 1px;
     }
 
     .plates-left {
-        left: 1%;
-        justify-content: flex-start;
+        left: 0;
+        padding-left: 1px; /* Add padding instead of margin */
     }
 
     .plates-right {
-        right: 1%;
-        justify-content: flex-start;
+        right: 0;
+        padding-right: 1px; /* Add padding instead of margin */
     }
 }
 
