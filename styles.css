@@ -117,7 +117,8 @@ main {
     justify-content: space-between;
     align-items: center;
     pointer-events: none;
-    padding: 0 20px; /* Added consistent padding */
+    padding: 0 20px;
+    box-sizing: border-box; /* Added to ensure padding is included in width */
 }
 
 .plates-left {
@@ -127,6 +128,7 @@ main {
     gap: 4px;
     position: relative;
     z-index: 1;
+    margin-right: auto; /* Added to ensure proper spacing from center */
 }
 
 .plates-right {
@@ -136,6 +138,7 @@ main {
     gap: 4px;
     position: relative;
     z-index: 1;
+    margin-left: auto; /* Added to ensure proper spacing from center */
 }
 
 /* Add spacing between plates */
