@@ -18,7 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State
     let isMetric = false;
-    let availablePlates = new Map(PLATE_WEIGHTS_LBS.map(weight => [weight, 0]));
+    // Initialize with default plate counts
+    let availablePlates = new Map([
+        [100, 0],  // No 100lb plates by default
+        [45, 6],   // 6x 45lb plates
+        [35, 0],   // No 35lb plates by default
+        [25, 2],   // 2x 25lb plates
+        [10, 4],   // 4x 10lb plates
+        [5, 2],    // 2x 5lb plates
+        [2.5, 2],  // 2x 2.5lb plates
+        [1.25, 2]  // 2x 1.25lb plates (closest to 1.5lb)
+    ]);
 
     // Initialize plate counters
     initializePlateCounters();
@@ -32,14 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const plateOptions = document.querySelector('.plate-options');
         plateOptions.innerHTML = ''; // Clear existing options
 
-        const weights = isMetric ? PLATE_WEIGHTS_KG : PLATE_WEIGHTS_LBS;
-        
-        weights.forEach((weight) => {
+        PLATE_WEIGHTS_LBS.forEach((weight) => {
             const plateOption = document.createElement('div');
             plateOption.className = 'plate-option';
             
             const weightSpan = document.createElement('span');
-            weightSpan.textContent = `${weight} ${isMetric ? 'kg' : 'lbs'}`;
+            weightSpan.textContent = `${weight} lbs`;
             
             const counter = document.createElement('div');
             counter.className = 'counter';
@@ -50,10 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const countSpan = document.createElement('span');
             countSpan.className = 'count';
-            
-            // Convert the stored pound value to kg if needed
-            const weightInLbs = isMetric ? weight * KG_TO_LBS : weight;
-            countSpan.textContent = availablePlates.get(weightInLbs) || '0';
+            countSpan.textContent = availablePlates.get(weight).toString();
             
             const incrementBtn = document.createElement('button');
             incrementBtn.className = 'increment';
@@ -70,17 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add event listeners
             incrementBtn.addEventListener('click', () => {
-                const weightToStore = isMetric ? weight * KG_TO_LBS : weight;
-                const currentCount = availablePlates.get(weightToStore) || 0;
-                availablePlates.set(weightToStore, currentCount + 1);
+                const currentCount = availablePlates.get(weight) || 0;
+                availablePlates.set(weight, currentCount + 1);
                 countSpan.textContent = currentCount + 1;
             });
 
             decrementBtn.addEventListener('click', () => {
-                const weightToStore = isMetric ? weight * KG_TO_LBS : weight;
-                const currentCount = availablePlates.get(weightToStore) || 0;
+                const currentCount = availablePlates.get(weight) || 0;
                 if (currentCount > 0) {
-                    availablePlates.set(weightToStore, currentCount - 1);
+                    availablePlates.set(weight, currentCount - 1);
                     countSpan.textContent = currentCount - 1;
                 }
             });
