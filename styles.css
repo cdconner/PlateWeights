@@ -117,14 +117,14 @@ main {
     justify-content: space-between;
     align-items: center;
     pointer-events: none;
+    padding: 0 20px; /* Added consistent padding */
 }
 
 .plates-left {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     gap: 4px;
-    padding-left: 20px; /* Increased from 10px */
     position: relative;
     z-index: 1;
 }
@@ -134,7 +134,6 @@ main {
     flex-direction: row;
     align-items: center;
     gap: 4px;
-    padding-right: 20px; /* Increased from 10px */
     position: relative;
     z-index: 1;
 }
@@ -343,14 +342,12 @@ button:hover {
         height: 91px;
     }
 
-    .plates-left {
-        padding-left: 15px; /* Increased from 5px */
+    .plates-left, .plates-right {
         gap: 3px;
     }
 
-    .plates-right {
-        padding-right: 15px; /* Increased from 5px */
-        gap: 3px;
+    .plates-container {
+        padding: 0 15px;
     }
 }
 
@@ -375,14 +372,12 @@ button:hover {
         height: 77px;
     }
 
-    .plates-left {
-        padding-left: 10px; /* Increased from 3px */
+    .plates-left, .plates-right {
         gap: 2px;
     }
 
-    .plates-right {
-        padding-right: 10px; /* Increased from 3px */
-        gap: 2px;
+    .plates-container {
+        padding: 0 10px;
     }
 }
 
