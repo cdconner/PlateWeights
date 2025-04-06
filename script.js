@@ -152,11 +152,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createPlateElement(weight) {
         const plate = document.createElement('div');
-        plate.className = 'plate';
+        plate.className = 'plate ' + getWeightClass(weight);
         plate.textContent = isMetric ? 
             Math.round(weight * LBS_TO_KG) : 
             weight;
         return plate;
+    }
+
+    function getWeightClass(weightLbs) {
+        // Round to 1 decimal place to handle floating point comparison
+        const roundedWeight = Math.round(weightLbs * 10) / 10;
+
+        // Match the pound values from the chart
+        switch (roundedWeight) {
+            case 55.1:
+            case 55.12: return 'weight-25';  // 25kg = 55.12 lbs
+            case 44.1:
+            case 44.09: return 'weight-20';  // 20kg = 44.09 lbs
+            case 33.1:
+            case 33.07: return 'weight-15';  // 15kg = 33.07 lbs
+            case 22.0:
+            case 22.05: return 'weight-10';  // 10kg = 22.05 lbs
+            case 11.0:
+            case 11.02: return 'weight-5';   // 5kg = 11.02 lbs
+            case 5.5:
+            case 5.51: return 'weight-2-5';  // 2.5kg = 5.51 lbs
+            case 4.4:
+            case 4.41: return 'weight-2';    // 2kg = 4.41 lbs
+            case 3.3:
+            case 3.31: return 'weight-1-5';  // 1.5kg = 3.31 lbs
+            case 2.2:
+            case 2.20: return 'weight-1';    // 1kg = 2.20 lbs
+            case 1.1:
+            case 1.10: return 'weight-0-5';  // 0.5kg = 1.10 lbs
+            // Common pound plates that don't match kg conversions
+            case 45: return 'weight-20';     // Treat 45lb as blue (closest to 20kg)
+            case 35: return 'weight-15';     // Treat 35lb as yellow (closest to 15kg)
+            case 25: return 'weight-10';     // Treat 25lb as green (closest to 10kg)
+            case 10: return 'weight-5';      // Treat 10lb as white (closest to 5kg)
+            case 5: return 'weight-2-5';     // Treat 5lb as red (closest to 2.5kg)
+            case 2.5: return 'weight-1';     // Treat 2.5lb as green (closest to 1kg)
+            case 1.25: return 'weight-0-5';  // Treat 1.25lb as white (closest to 0.5kg)
+            default: return 'weight-other';
+        }
     }
 
     function showError(message) {

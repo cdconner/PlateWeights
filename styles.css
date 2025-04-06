@@ -103,7 +103,6 @@ main {
 .plate {
     width: 40px;
     height: 60px;
-    background-color: var(--secondary-color);
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -120,6 +119,19 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
 }
+
+/* Weight-based colors */
+.plate.weight-25 { background-color: #ff0000; } /* red */
+.plate.weight-20 { background-color: #0000ff; } /* blue */
+.plate.weight-15 { background-color: #ffff00; color: black; } /* yellow with black text */
+.plate.weight-10 { background-color: #008000; } /* green */
+.plate.weight-5 { background-color: #ffffff; color: black; } /* white with black text */
+.plate.weight-2-5 { background-color: #ff0000; } /* red */
+.plate.weight-2 { background-color: #0000ff; } /* blue */
+.plate.weight-1-5 { background-color: #ffff00; color: black; } /* yellow with black text */
+.plate.weight-1 { background-color: #008000; } /* green */
+.plate.weight-0-5 { background-color: #ffffff; color: black; } /* white with black text */
+.plate.weight-other { background-color: #000000; } /* black for non-standard weights */
 
 .plate::before {
     content: '';
@@ -255,5 +267,37 @@ button:hover {
 
     .plate-options {
         grid-template-columns: 1fr;
+    }
+
+    .plate {
+        width: 30px;
+        height: 50px;
+        font-size: 0.8rem;
+        padding: 3px;
+    }
+
+    .barbell {
+        height: 80px;
+    }
+
+    .barbell-bar {
+        height: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .plate {
+        width: 25px;
+        height: 45px;
+        font-size: 0.7rem;
+        padding: 2px;
+    }
+
+    .barbell {
+        height: 70px;
+    }
+
+    .barbell-bar {
+        height: 6px;
     }
 } 
