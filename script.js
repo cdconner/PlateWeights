@@ -137,8 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
         platesLeft.innerHTML = '';
         platesRight.innerHTML = '';
 
-        // Create plates for both sides
-        for (const [weight, count] of combination) {
+        // Convert Map to array and sort by weight (heaviest first)
+        const sortedPlates = Array.from(combination.entries())
+            .sort((a, b) => b[0] - a[0]); // Sort by weight in descending order
+
+        // Create plates for both sides in sorted order
+        for (const [weight, count] of sortedPlates) {
             for (let i = 0; i < count; i++) {
                 const plate = createPlateElement(weight);
                 platesLeft.appendChild(plate.cloneNode(true));

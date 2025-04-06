@@ -97,7 +97,17 @@ main {
 .plates-left, .plates-right {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 2px;
+}
+
+.plates-left {
+    flex-direction: row-reverse; /* Stack from right to left */
+    justify-content: flex-end;
+}
+
+.plates-right {
+    flex-direction: row; /* Stack from left to right */
+    justify-content: flex-start;
 }
 
 .plate {
@@ -118,6 +128,20 @@ main {
     padding: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
+    z-index: 1; /* Base z-index for plates */
+}
+
+/* Add a subtle overlap effect */
+.plates-left .plate + .plate,
+.plates-right .plate + .plate {
+    margin-left: -2px;
+    position: relative;
+}
+
+/* Ensure proper stacking context */
+.plates-left .plate:not(:first-child),
+.plates-right .plate:not(:first-child) {
+    z-index: 0;
 }
 
 /* Weight-based colors */
