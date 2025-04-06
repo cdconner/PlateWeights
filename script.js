@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePlateCounters();
 
     // Event Listeners
-    unitToggle.addEventListener('click', toggleUnits);
+    unitToggle.addEventListener('change', toggleUnits);
     calculateBtn.addEventListener('click', calculatePlateCombination);
     closeResult.addEventListener('click', () => result.classList.add('hidden'));
 
@@ -88,8 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleUnits() {
-        isMetric = !isMetric;
-        unitToggle.textContent = isMetric ? 'Switch to lbs' : 'Switch to kg';
+        isMetric = unitToggle.checked;
         
         // Update target weight placeholder
         targetWeight.placeholder = isMetric ? "Enter target weight (kg)" : "Enter target weight (lbs)";
