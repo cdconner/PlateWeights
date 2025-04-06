@@ -53,13 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
         isMetric = !isMetric;
         unitToggle.textContent = isMetric ? 'Switch to lbs' : 'Switch to kg';
         
+        // Update target weight placeholder
+        targetWeight.placeholder = isMetric ? "Enter target weight (kg)" : "Enter target weight (lbs)";
+        
+        // If there's a value in the target weight field, convert it
+        const currentTarget = targetWeight.value;
+        if (currentTarget !== '') {
+            const numValue = parseFloat(currentTarget);
+            if (!isNaN(numValue)) {
+                targetWeight.value = isMetric ? 
+                    (numValue * LBS_TO_KG).toFixed(1) : 
+                    (numValue * KG_TO_LBS).toFixed(1);
+            }
+        }
+
         // Update barbell weight options
         const currentValue = barbellWeight.value;
         barbellWeight.innerHTML = '';
         const weights = [25, 30, 35, 40, 45, 50, 55, 60];
         weights.forEach(weight => {
             const option = document.createElement('option');
-            option.value = weight;
+            option.value = weight; // Always store lbs value
             option.textContent = isMetric ? 
                 `${(weight * LBS_TO_KG).toFixed(1)} kg` : 
                 `${weight} lbs`;
@@ -74,23 +88,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 `${(weight * LBS_TO_KG).toFixed(1)} kg` : 
                 `${weight} lbs`;
         });
+
+        // If there's a result showing, recalculate to update the display
+        if (!result.classList.contains('hidden')) {
+            calculatePlateCombination();
+        }
     }
 
     function calculatePlateCombination() {
         const barbellWeightValue = parseFloat(barbellWeight.value);
-        const targetWeightValue = parseFloat(targetWeight.value);
+        let targetWeightValue = parseFloat(targetWeight.value);
 
         if (isNaN(targetWeightValue)) {
             showError('Please enter a valid target weight');
             return;
         }
 
+        // Convert target weight to lbs if in metric mode
         const targetWeightInLbs = isMetric ? targetWeightValue * KG_TO_LBS : targetWeightValue;
-        const barbellWeightInLbs = isMetric ? barbellWeightValue * KG_TO_LBS : barbellWeightValue;
+        const barbellWeightInLbs = barbellWeightValue; // Barbell weight is always stored in lbs
 
         const weightToAdd = targetWeightInLbs - barbellWeightInLbs;
         if (weightToAdd <= 0) {
-            showError('Target weight must be greater than barbell weight');
+            showError(`Target weight must be greater than barbell weight (${isMetric ? 
+                (barbellWeightInLbs * LBS_TO_KG).toFixed(1) + ' kg' : 
+                barbellWeightInLbs + ' lbs'})`);
             return;
         }
 
