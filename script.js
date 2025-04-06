@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const barbellWeight = document.getElementById('barbellWeight');
     const targetWeight = document.getElementById('targetWeight');
     const calculateBtn = document.getElementById('calculateBtn');
-    const result = document.getElementById('result');
-    const plateCombination = document.getElementById('plateCombination');
-    const closeResult = document.getElementById('closeResult');
     const platesLeft = document.querySelector('.plates-left');
     const platesRight = document.querySelector('.plates-right');
 
@@ -36,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners
     unitToggle.addEventListener('change', toggleUnits);
     calculateBtn.addEventListener('click', calculatePlateCombination);
-    closeResult.addEventListener('click', () => result.classList.add('hidden'));
 
     function initializePlateCounters() {
         const plateOptions = document.querySelector('.plate-options');
@@ -123,17 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reinitialize plate counters with new unit system
         initializePlateCounters();
-
-        // If there's a result showing, recalculate to update the display
-        if (!result.classList.contains('hidden')) {
-            calculatePlateCombination();
-        }
     }
 
     function calculatePlateCombination() {
         const barbellWeightValue = parseFloat(barbellWeight.value);
         let targetWeightValue = parseFloat(targetWeight.value);
-
+        
         if (isNaN(targetWeightValue)) {
             showError(`Please enter a valid target weight in ${isMetric ? 'kilograms' : 'pounds'}`);
             return;
@@ -212,9 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 platesRight.appendChild(plate);
             }
         }
-
-        // Show result modal
-        result.classList.remove('hidden');
     }
 
     function createPlateElement(weight) {
@@ -265,7 +253,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showError(message) {
-        plateCombination.innerHTML = `<p class="error">${message}</p>`;
-        result.classList.remove('hidden');
+        // Create or get error message element
+        let errorElement = document.getElementById('error-message');
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.id = 'error-message';
+            errorElement.className = 'error-message';
+            document.body.appendChild(errorElement);
+        }
+        
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        
+        // Hide error after 3 seconds
+        setTimeout(() => {
+            errorElement.style.display = 'none';
+        }, 3000);
     }
+
+    // Add error message styling
+    const style = document.createElement('style');
+    style.textContent = `
+        .error-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none;
+        }
+    `;
+    document.head.appendChild(style);
 }); 
