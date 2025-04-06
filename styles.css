@@ -116,27 +116,27 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 2;
+    pointer-events: none;
 }
 
 .plates-left {
-    position: absolute;
-    left: 0;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    gap: 4px; /* Increased gap between plates */
-    padding-left: 10px; /* Added padding from the edge */
-}
-
-.plates-right {
-    position: absolute;
-    right: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 4px; /* Increased gap between plates */
-    padding-right: 10px; /* Added padding from the edge */
+    gap: 4px;
+    padding-left: 20px; /* Increased from 10px */
+    position: relative;
+    z-index: 1;
+}
+
+.plates-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    padding-right: 20px; /* Increased from 10px */
+    position: relative;
+    z-index: 1;
 }
 
 /* Add spacing between plates */
@@ -344,13 +344,13 @@ button:hover {
     }
 
     .plates-left {
-        padding-left: 5px; /* Reduced padding for tablet */
-        gap: 3px; /* Slightly reduced gap for tablet */
+        padding-left: 15px; /* Increased from 5px */
+        gap: 3px;
     }
 
     .plates-right {
-        padding-right: 5px; /* Reduced padding for tablet */
-        gap: 3px; /* Slightly reduced gap for tablet */
+        padding-right: 15px; /* Increased from 5px */
+        gap: 3px;
     }
 }
 
@@ -376,13 +376,13 @@ button:hover {
     }
 
     .plates-left {
-        padding-left: 3px; /* Minimal padding for mobile */
-        gap: 2px; /* Minimal gap for mobile */
+        padding-left: 10px; /* Increased from 3px */
+        gap: 2px;
     }
 
     .plates-right {
-        padding-right: 3px; /* Minimal padding for mobile */
-        gap: 2px; /* Minimal gap for mobile */
+        padding-right: 10px; /* Increased from 3px */
+        gap: 2px;
     }
 }
 
