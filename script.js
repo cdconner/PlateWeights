@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const maxDisplay = isMetric ? 
                 `${(maxPossibleWeight * LBS_TO_KG).toFixed(1)} kg` : 
                 `${maxPossibleWeight} lbs`;
-            showError(`Cannot achieve target weight with available plates. Maximum possible weight is ${maxDisplay}.`);
+            showError(`Cannot achieve exact target weight with available plates. Maximum possible weight is ${maxDisplay}.`);
             return;
         }
 
@@ -204,23 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (remainingWeight === 0) break;
         }
 
-        // If we couldn't find an exact combination, try to get as close as possible
+        // If we still have remaining weight, it means we couldn't achieve the exact target
         if (remainingWeight > 0) {
-            for (const plateWeight of sortedPlates) {
-                const availableCount = availablePlates.get(plateWeight) || 0;
-                if (availableCount === 0) continue;
-
-                const maxPairs = Math.min(
-                    Math.ceil(remainingWeight / plateWeight),
-                    Math.floor(availableCount / 2)
-                );
-
-                if (maxPairs > 0) {
-                    combination.set(plateWeight, maxPairs * 2);
-                    remainingWeight -= maxPairs * plateWeight;
-                    break;
-                }
-            }
+            return null;
         }
 
         return combination;
