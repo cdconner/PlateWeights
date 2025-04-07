@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Constants
-    const PLATE_WEIGHTS_LBS = [45, 25, 10, 5, 2.5, 0.75, 0.5];
+    const PLATE_WEIGHTS_LBS = [45, 35, 25, 10, 5, 2.5, 0.75, 0.5];
     const PLATE_WEIGHTS_KG = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5];
     const KG_TO_LBS = 2.20462;
     const LBS_TO_KG = 0.453592;
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize available plates with their counts
     const availablePlates = new Map([
         [45, 8],   // 8 pairs of 45s
+        [35, 0],   // 0 pairs of 35s
         [25, 4],   // 4 pairs of 25s
         [10, 4],   // 4 pairs of 10s
         [5, 4],    // 4 pairs of 5s
