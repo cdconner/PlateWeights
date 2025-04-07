@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Constants
-    const PLATE_WEIGHTS_LBS = [45, 35, 25, 10, 5, 2.5, 0.75, 0.5];
+    const PLATE_WEIGHTS_LBS = [45, 35, 25, 10, 5, 2.5, 1, 0.75, 0.5, 0.25];
     const PLATE_WEIGHTS_KG = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5];
     const KG_TO_LBS = 2.20462;
     const LBS_TO_KG = 0.453592;
@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         [10, 4],   // 4 pairs of 10s
         [5, 4],    // 4 pairs of 5s
         [2.5, 4],  // 4 pairs of 2.5s
+        [1, 2],    // 1 pair of 1s
         [0.75, 2], // 1 pair of 0.75s
-        [0.5, 2]   // 1 pair of 0.5s
+        [0.5, 2],  // 1 pair of 0.5s
+        [0.25, 2]  // 1 pair of 0.25s
     ]);
 
     // Initialize plate counters
