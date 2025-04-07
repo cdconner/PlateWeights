@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Constants
-    const PLATE_WEIGHTS_LBS = [100, 45, 35, 25, 10, 5, 2.5, 1.25];
+    const PLATE_WEIGHTS_LBS = [45, 25, 10, 5, 2.5, 0.75, 0.5];
     const PLATE_WEIGHTS_KG = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5];
     const KG_TO_LBS = 2.20462;
     const LBS_TO_KG = 0.453592;
@@ -15,16 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State
     let isMetric = false;
-    // Initialize with default plate counts
-    let availablePlates = new Map([
-        [100, 0],  // No 100lb plates by default
-        [45, 6],   // 6x 45lb plates
-        [35, 0],   // No 35lb plates by default
-        [25, 2],   // 2x 25lb plates
-        [10, 4],   // 4x 10lb plates
-        [5, 2],    // 2x 5lb plates
-        [2.5, 2],  // 2x 2.5lb plates
-        [1.25, 2]  // 2x 1.25lb plates (closest to 1.5lb)
+    // Initialize available plates with their counts
+    const availablePlates = new Map([
+        [45, 8],   // 8 pairs of 45s
+        [25, 4],   // 4 pairs of 25s
+        [10, 4],   // 4 pairs of 10s
+        [5, 4],    // 4 pairs of 5s
+        [2.5, 4],  // 4 pairs of 2.5s
+        [0.75, 2], // 1 pair of 0.75s
+        [0.5, 2]   // 1 pair of 0.5s
     ]);
 
     // Initialize plate counters
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Convert target weight to lbs if in metric mode
         const targetWeightInLbs = isMetric ? targetWeightValue * KG_TO_LBS : targetWeightValue;
-        const barbellWeightInLbs = barbellWeightValue; // Barbell weight is always stored in lbs
+        const barbellWeightInLbs = barbellWeightValue;
 
         const weightToAdd = targetWeightInLbs - barbellWeightInLbs;
         if (weightToAdd <= 0) {
@@ -143,9 +142,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const plateCombination = findPlateCombination(weightToAdd / 2); // Divide by 2 for each side
+        const plateCombination = findPlateCombination(weightToAdd / 2);
         if (!plateCombination) {
-            showError('Cannot achieve target weight with available plates. Please add more plates.');
+            // Calculate maximum possible weight
+            let maxPossibleWeight = barbellWeightInLbs;
+            for (const [weight, count] of availablePlates) {
+                maxPossibleWeight += weight * Math.floor(count / 2) * 2;
+            }
+            const maxDisplay = isMetric ? 
+                `${(maxPossibleWeight * LBS_TO_KG).toFixed(1)} kg` : 
+                `${maxPossibleWeight} lbs`;
+            showError(`Cannot achieve target weight with available plates. Maximum possible weight is ${maxDisplay}.`);
             return;
         }
 
@@ -155,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function findPlateCombination(targetWeightPerSide) {
         const combination = new Map();
         let remainingWeight = targetWeightPerSide;
-        let totalPlates = 0;
+        let maxPossibleWeight = 0;
 
         // Get the appropriate plate weights based on the current unit system
         const plateWeights = isMetric ? 
@@ -165,7 +172,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sort plates in descending order
         const sortedPlates = [...plateWeights].sort((a, b) => b - a);
 
-        // First pass: try to use the largest plates possible
+        // First, calculate maximum possible weight with available plates
+        for (const plateWeight of sortedPlates) {
+            const availableCount = availablePlates.get(plateWeight) || 0;
+            if (availableCount === 0) continue;
+            maxPossibleWeight += Math.floor(availableCount / 2) * plateWeight;
+        }
+
+        // If we can't reach the target weight, return null
+        if (maxPossibleWeight < targetWeightPerSide) {
+            return null;
+        }
+
+        // Now try to find the best combination
         for (const plateWeight of sortedPlates) {
             const availableCount = availablePlates.get(plateWeight) || 0;
             if (availableCount === 0) continue;
@@ -173,21 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calculate maximum number of pairs we can use
             const maxPairs = Math.min(
                 Math.floor(remainingWeight / plateWeight),
-                Math.floor(availableCount / 2) // Ensure we have enough plates for both sides
+                Math.floor(availableCount / 2)
             );
 
             if (maxPairs > 0) {
-                combination.set(plateWeight, maxPairs * 2); // Store total plates needed (both sides)
+                combination.set(plateWeight, maxPairs * 2);
                 remainingWeight -= maxPairs * plateWeight;
-                totalPlates += maxPairs * 2;
             }
 
             if (remainingWeight === 0) break;
         }
 
-        // If we couldn't find an exact combination, try to find the closest possible
+        // If we couldn't find an exact combination, try to get as close as possible
         if (remainingWeight > 0) {
-            // Find the smallest plate that can help us get closer
             for (const plateWeight of sortedPlates) {
                 const availableCount = availablePlates.get(plateWeight) || 0;
                 if (availableCount === 0) continue;
@@ -200,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (maxPairs > 0) {
                     combination.set(plateWeight, maxPairs * 2);
                     remainingWeight -= maxPairs * plateWeight;
-                    totalPlates += maxPairs * 2;
                     break;
                 }
             }
